@@ -1,2 +1,3 @@
 # bachelor-final
-Thesist
+Final Bachelor's exam.
+The subject is "cedrata-detector".

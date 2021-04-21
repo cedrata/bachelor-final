@@ -5,7 +5,7 @@
 \rhead{\thepage}
 
 %%% Fancy header settings, queste impostazioni vanno fatte solo una volta all'inizio del primo capitolo!
-\pagestyle{fancy}
+\pagestyle{plain}
 \fancyhf{}
 \renewcommand{\headrulewidth}{2pt}
 \fancyhead[EL]{\textbf{\textsf{\nouppercase\thepage}}}
@@ -19,7 +19,7 @@
 
 Nella musica sono importanti il tempo, la sincronia tra i diversi musicisti e come questi si interfaccino gli uni agli altri. Tra musicisti (principalmente in generi come il Jazz), si dice ``avere groove'', un termine usato per definire un portamento ritmico che che provoca nella musica, un'empatia tra musicisti e ascoltatori[https://it.wikipedia.org/wiki/Groove].\\
 Sembra che questa carica di emozioni, possa trovare origine in un comportamento dei musicisti, i quali appaiono suonare non perfettamente a metronomo, ma con delle micro-variazioni di tempo (di millisecondi), le singole note originando del movimento nella musica, il groove. (\emph{microtiming}).[https://www.tandfonline.com/doi/full/10.1080/09298215.2017.1367405]\\
-Illustratomi questo problema dal mio tutore di tirocinio, il mio compito è stato quello di costruire un applicativo in grado di aiutare nell'analisi del questo problema. Il risultato del lavoro finale è dunque un software in grado di collocare temporalmente le note suonate da uno strumento in una traccia audio dello stesso. Dopo un'analisi attenta il percorso scelto per la risoluzione è stato quello dell'intelligenza artificiale, precisamente il machine learning, tecnica molto usata in questo ambito [https://ccrma.stanford.edu/~eberdahl/Projects/Microtiming/ML-Microtiming-ICMC.pdf]per approcciarsi a questa analisi. Lo scopo era dunque insegnare a una macchina la differenza tra una nota da una non-nota all'interno delle tracce audio fornite.\\
+Illustratomi questo problema dal mio tutore di tirocinio, il mio compito è stato quello di costruire un applicativo in grado di aiutare nell'analisi del questo problema. Il risultato del lavoro finale è dunque un software in grado di collocare temporalmente le note suonate da uno strumento in una traccia audio dello stesso. Dopo un'analisi attenta il percorso scelto per la risoluzione è stato quello dell'intelligenza artificiale, precisamente il \emph{M}L(machine learning), tecnica molto usata in questo ambito [https://ccrma.stanford.edu/~eberdahl/Projects/Microtiming/ML-Microtiming-ICMC.pdf]per approcciarsi a questa analisi. Lo scopo era dunque insegnare a una macchina la differenza tra una nota da una non-nota all'interno delle tracce audio fornite.\\
 Una volta costruita l'intelligenza del software usando il linguaggio di programmazione python, e appoggiandosi a weka, software open source per l'apprendimento automatico [https://www.cs.waikato.ac.nz/ml/weka/], è risultato necessario aggiungere uno scheletro per facilitarne l'utilizzo a utenti meno esperti con linea di comando, dunque creare una GUI (Graphical User Interface), realizzata anch'essa in linguaggio Python e con un framework chiamato Qt[https://www.qt.io/], che fornisce anche strumenti per la progettazione dell'interfaccia e i relativi moduli da utilizzare con il linguaggio python.
 SITI\\
 https://it.wikipedia.org/wiki/Groove\\

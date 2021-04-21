@@ -1,4 +1,17 @@
 \chapter{Machine Learning}
-COSA È
-\section{Classificazione con supervisione}
-\section{Regole ed alberi} parla di J48
+Si intende, per ML, una tecnica utilizzabile per risolvere problemi  nei quali si è in grado di specificare degli output dati determinati input senza però essere in grado di comprendere la relazione esistente tra i valori. Spesso problemi del tipo appena descritto portano con se un quantitativo di dati decisamente troppo vasto per essere analizzato soltanto da una o più persone, questa particolare tecnica offre dunque un modo più efficiente per svolgere analisi sui dati e rendere automatici determinati procedimenti consentendo anche di diminuire errori di tipo casuale dati dall'uomo, o addirittura catturare più informazioni rispetto a un operatore.\\
+Im ML possiede un dominio di applicazione molto ampio, che può andare dalla medicina alla psicologia, e proprio per questo motivo esistono vari approcci e modalità. Nel mio lavoro di tirocinio in particolare è stato usato un approccio supervisionato. 
+\section{Apprendimento supervisionato}
+Lo scopo di questo sistema è come dice la parola stessa, di supervisionare una macchina, questo costruendo un data-set \footnote{Il data-set è un insieme di dati raccolti da misurazioni svolte in fase di preparazione per lo studio del problema, classificati in modo opportuno.}
+di valori solitamente dei tipi che seguono: numerici (che devono essere normalizzati \footnote{Per normalizzazione si intende un processo che rende paragonabili dati tra loro di diversa natura fornendo valori compresi tra 0 e 1, ciò ottenuto nel modo seguente:\newline $\forall x_{i}, i\subset\mathbb{N}$ $x_{norm} = \dfrac{x_{i}-x_{min}}{x_{max} - x_{min}} $} prima di essere usati), nominali, stringhe oppure date, che serviranno come punto di riferimento alla macchina per costruire le regole che permetteranno di restituire precisi output dati determinati input.\\
+Il ML con apprendimento supervisionato si divide in problemi di classificazione o di regressione. Il Caso in questione rientra nel tipo di classificazione, dunque un problema che dato un valore, o insieme di valori, restituisce un risultato discreto appoggiandosi a un albero di decisione che la macchina ha costruito a partire da un meta-algoritmo, ciò dopo essere stata allenata con i dati di interesse.
+\section{Regole ed alberi} 
+Un albero di decisione è un insieme DEFINIZIONE A PAGINA 82 DI 188 DI NILSSON BOOK
+parla di J48
+
+SITI\\
+https://www.cs.waikato.ac.nz/ml/weka/arff.html
+
+LIBRI ARTICOLI\\
+https://ai.stanford.edu/~nilsson/MLBOOK.pdf
+

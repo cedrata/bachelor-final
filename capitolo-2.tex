@@ -16,9 +16,12 @@ https://www.blackghostaudio.com/blog/sample-rate-bit-depth-explained
 \end{figure}
 
 
-\subsection{WAV e AIFF}
+\subsection{Formati WAV e AIFF}
+Questi formati audio sono molto importanti, come detto all'inizio del capitolo, perché consentono di salvare tracce audio senza alterare le caratteristiche sonore e dinamiche dell'audio. Questo quantitativo di informazioni deve però essere pagato in termini di memoria, infatti i file salvati in questi formati possono arrivare ad essere di grandi dimensioni anche per registrazioni di pochi minuti. A questo proposito viene introdotto negli anni '90, con l'avvento dell'audio digitale, il formato mp3, che consente di effettuare un \emph{downsampling} dell'audio riducendo lo spazio di memoria necessario per l'archiviazione. Questa procedura di compressione delle informazioni, riduce però la qualità, non strettamente percepibile da rovinare l'ascolto, ma a sufficienza da rendere questo tipo di file inadatto ad analisi attente come missaggio, o mixing in inglese\footnote{Fase di miscelazione dei suoni in produzione audio} e mastering\footnote{Fase successiva al missaggio svolta su una singola traccia ottenuta dal missaggio per consentire la migliore riproduzione sonora dell'audio su diversi dispositivi} per gli studi di registrazione.
 
 \section{Features utilizzate}
+Visto come sono formati i file audio da utilizzare, WAV o AIFF, sono state scelte le seguenti features da utilizzare per l'approccio deciso di ML per descrivere un'onda sonora: la media, la varianza, la media della derivata prima e  della derivata seconda.
+
 %CHE DEVE ESSERE TRATTATO NEL DISCRETO, VEDI FILE AUDIO: SOTTO PUNTI WAV E AIFF
 
 

@@ -18,6 +18,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor}
 \usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usetikzlibrary{matrix,calc}
 \usepackage{layout}		% http://tex.stackexchange.com/questions/50258/margins-of-book-class
 \input{fixpseudocode}	% for pseudocodes
 
@@ -147,14 +150,14 @@
 \input{capitolo-2}
 \input{capitolo-3}
 \newpage
-Qua inizia la numerazione delle pagine, guardare in alto della pagina
+%Qua inizia la numerazione delle pagine, guardare in alto della pagina
 
-\begin{figure}[t]
-\begin{center}
-\includegraphics[scale=0.5]{./immagini/logo.png}
-\end{center}
-\caption{<===Diventa in italiano.}\label{fig:uni}
-\end{figure}
+%\begin{figure}[t]
+%\begin{center}
+%\includegraphics[scale=0.5]{./immagini/logo.png}
+%\end{center}
+%\caption{<===Diventa in italiano.}\label{fig:uni}
+%\end{figure}
 
 \bibliographystyle{ieeetr}
 \bibliography{bib}

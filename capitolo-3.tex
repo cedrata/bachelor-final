@@ -10,7 +10,7 @@ Le tracce di strumenti fornitemi dal tutore e utilizzate per gli esperimenti son
 
 
 \section{Prima fase}
-In questa fase lo scopo è stato appunto comprendere se una macchina con le features selezionate fosse in grado di riconoscere la differenza tra nota e non nota. Una volta creato il file arff contenente le informazioni necessarie tramite un apposito script python lo stesso file è stato usato per costruire l'albero decisionale utilizzando l'algoritmo J48 (versione più fine di ID3 descritto nel Capitolo 2) ottenendo come risultato le seguenti matrici di confusione per gli strumenti  sopra elencati :\\
+In questa fase lo scopo è stato appunto comprendere se una macchina con le features selezionate fosse in grado di riconoscere la differenza tra nota e non nota. Una volta creato il file arff contenente le informazioni necessarie tramite un apposito script python lo stesso file è stato usato per costruire l'albero decisionale utilizzando l'algoritmo J48 (versione più fine di ID3 descritto nel Capitolo 2) ottenendo come risultato le seguenti matrici di confusione\footnote{Le colonne di queste matrici di confusione indicano il valore atteso, sulle righe vi sono invece i valori risultanti} per gli strumenti sopra elencati:\\
 
 
 %TODO: RICONTROLLA MATRICI
@@ -75,8 +75,8 @@ scale = \myScale,
 %Now add x and y labels on suitable coordinates
 \coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
 \coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {Classe Risultante};
-\node []               at (xaxis) {Classe Target};
+\node [vertical label] at (yaxis) {};
+\node []               at (xaxis) {};
 \end{tikzpicture}
 
 
@@ -141,8 +141,8 @@ scale = \myScale,
 %Now add x and y labels on suitable coordinates
 \coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
 \coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {Classe Risultante};
-\node []               at (xaxis) {Classe Target};
+\node [vertical label] at (yaxis) {};
+\node []               at (xaxis) {};
 \end{tikzpicture}
 
 %% MATRICDE DI CONFUSIONE DEL RULLANTE SPAZZOLATO
@@ -206,8 +206,8 @@ scale = \myScale,
 %Now add x and y labels on suitable coordinates
 \coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
 \coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {Classe Risultante};
-\node []               at (xaxis) {Classe Target};
+\node [vertical label] at (yaxis) {};
+\node []               at (xaxis) {};
 \end{tikzpicture}
 
 %% MATRICDE DI CONFUSIONE DEL COLPO DI RULLANTE
@@ -271,8 +271,15 @@ scale = \myScale,
 %Now add x and y labels on suitable coordinates
 \coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
 \coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {Classe Risultante};
-\node []               at (xaxis) {Classe Target};
+\node [vertical label] at (yaxis) {};
+\node []               at (xaxis) {};
 \end{tikzpicture}
 
-È possibile notare degli ottimi risultati per tutti gli strumenti nel riconoscimento, in particolar modo per la cassa e il colpo di rullante, vista la natura dell'onda sonora da loro prodotta, un'impulso con una crescita molto rapida. Lo strumento che è riconosciuto peggio è invece il rullante spazzolato, anch'esso per la natura dell'onda sonora da lui prodotto, distinguibile meno facilmente da un possibile rumore per ampiezza e impulso con crescita molto minore.\section{Seconda fase}
+È possibile notare degli ottimi risultati per tutti gli strumenti nel riconoscimento, in particolar modo per la cassa e il colpo di rullante, vista la natura dell'onda sonora da loro prodotta, un'impulso con una crescita molto rapida. Lo strumento che è riconosciuto peggio è invece il rullante spazzolato, anch'esso per la natura dell'onda sonora da lui prodotto, distinguibile meno facilmente da un possibile rumore per ampiezza e impulso con crescita molto minore.\\
+Essendo questi risultati molto buoni, è possibile affermare che con le features utilizzate risulta possibile distinguere tra una nota e una non nota.\\
+
+\section{Seconda fase}
+In questa fase si vuole rendere più fine il riconoscimento delle note, consentendo di accettare in input un'intera traccia audio e non solo dei singoli frammenti di note o non per il riconoscimento. Partendo dalla classificazione, viene sempre utilizzato J48 per costruire un albero di decisione che non porterà più a decidere se un frammento analizzato è una nota o meno, questo infatti porterà a classificare in 5 classi diverse ogni elemento di input, come appunto descritto a inizio capitolo. L'algoritmo di classificazione è molto simile al passo precedente, l'unica differenza è che vengono scelti dei campioni più lunghi per poter essere spezzati in più sub-campioni, il primo classificato come 5 (certamente una nota), l'ultimo come 1 (certamente non una nota). Ogni sub-campione avrà la stessa lunghezza, e proprio così facendo è stato possibile fornire in input delle intere tracce, perché suddivise in sub-campioni, di lunghezza costante, al quale si associa a ognuno una classe da 1 a 5 che consente così di localizzare temporalmente le note, e risolvere dunque il problema posto inizialmente. 
+
+%INSERISCI MATRICI DI CONFUSIONE
+%SPIEGA QUALI SONO I PARAMETRI  CHE INFLUENZANO I RISULTATI, GRANULARITÀ, WINDOW LENGTH E OVERLAP.

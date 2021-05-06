@@ -13,273 +13,37 @@ Le tracce di strumenti fornitemi dal tutore e utilizzate per gli esperimenti son
 In questa fase lo scopo è stato appunto comprendere se una macchina con le features selezionate fosse in grado di riconoscere la differenza tra nota e non nota. Una volta creato il file arff contenente le informazioni necessarie tramite un apposito script python lo stesso file è stato usato per costruire l'albero decisionale utilizzando l'algoritmo J48 (versione più fine di ID3 descritto nel Capitolo 2) ottenendo come risultato le seguenti matrici di confusione\footnote{Le colonne di queste matrici di confusione indicano il valore atteso, sulle righe vi sono invece i valori risultanti} per gli strumenti sopra elencati:\\
 
 
-%TODO: RICONTROLLA MATRICI
-% MATRICE DI CONFSIONE DEL CONTRABBASSO
-\def\myConfMat{{
-		{ 114,  10},  %row 1
-		{   7,  84},  %row 2
-}}
-
-\def\classNames{{"SI","NO"}} %class names. Adapt at will
-
-\def\numClasses{2} %number of classes. Could be automatic, but you can change it for tests.
-
-\def\myScale{1.5} % 1.5 is a good scale. Values under 1 may need smaller fonts!
-\begin{tikzpicture}[
-scale = \myScale,
-%font={\scriptsize}, %for smaller scales, even \tiny may be useful
-]
-
-\tikzset{vertical label/.style={rotate=90,anchor=east}}   % usable styles for below
-\tikzset{diagonal label/.style={rotate=45,anchor=north east}}
-
-\foreach \y in {1,...,\numClasses} %loop vertical starting on top
-{
-	% Add class name on the left
-	\node [anchor=east] at (0.4,-\y) {\pgfmathparse{\classNames[\y-1]}\pgfmathresult}; 
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/first_classification/cb_cm.png} 
+		\caption{Matrice di confusione per il basso}
+		\label{fig:1a}
+	\end{subfigure}\hfill
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/first_classification/sn_brushed_cm.png}
+		\caption{Matrice di confusione per il rullante spazzolato}
+		\label{fig:1b}
+	\end{subfigure}
 	
-	\foreach \x in {1,...,\numClasses}  %loop horizontal starting on left
-	{
-		%---- Start of automatic calculation of totSamples for the column ------------   
-		\def\totSamples{0}
-		\foreach \ll in {1,...,\numClasses}
-		{
-			\pgfmathparse{\myConfMat[\ll-1][\x-1]}   %fetch next element
-			\xdef\totSamples{\totSamples+\pgfmathresult} %accumulate it with previous sum
-			%must use \xdef fro global effect otherwise lost in foreach loop!
-		}
-		\pgfmathparse{\totSamples} \xdef\totSamples{\pgfmathresult}  % put the final sum in variable
-		%---- End of automatic calculation of totSamples ----------------
-		
-		\begin{scope}[shift={(\x,-\y)}]
-		\def\mVal{\myConfMat[\y-1][\x-1]} % The value at index y,x (-1 because of zero indexing)
-		\pgfmathtruncatemacro{\r}{\mVal}   %
-		\pgfmathtruncatemacro{\p}{round(\r/\totSamples*100)}
-		\coordinate (C) at (0,0);
-		\ifthenelse{\p<50}{\def\txtcol{black}}{\def\txtcol{white}} %decide text color for contrast
-		\node[
-		draw,                 %draw lines
-		text=\txtcol,         %text color (automatic for better contrast)
-		align=center,         %align text inside cells (also for wrapping)
-		fill=black!\p,        %intensity of fill (can change base color)
-		minimum size=\myScale*10mm,    %cell size to fit the scale and integer dimensions (in cm)
-		inner sep=0,          %remove all inner gaps to save space in small scales
-		] (C) {\r\\\p\%};     %text to put in cell (adapt at will)
-		%Now if last vertical class add its label at the bottom
-		\ifthenelse{\y=\numClasses}{
-			\node [] at ($(C)-(0,0.75)$) % can use vertical or diagonal label as option
-			{\pgfmathparse{\classNames[\x-1]}\pgfmathresult};}{}
-		\end{scope}
-	}
-}
-%Now add x and y labels on suitable coordinates
-\coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
-\coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {};
-\node []               at (xaxis) {};
-\end{tikzpicture}
-
-
-%% MATRICDE DI CONFUSIONE DELLA CASSA
-\def\myConfMat{{
-		{ 132,   1},  %row 1
-		{   0,  71},  %row 2
-}}
-
-\def\classNames{{"SI","NO"}} %class names. Adapt at will
-
-\def\numClasses{2} %number of classes. Could be automatic, but you can change it for tests.
-
-\def\myScale{1.5} % 1.5 is a good scale. Values under 1 may need smaller fonts!
-\begin{tikzpicture}[
-scale = \myScale,
-%font={\scriptsize}, %for smaller scales, even \tiny may be useful
-]
-
-\tikzset{vertical label/.style={rotate=90,anchor=east}}   % usable styles for below
-\tikzset{diagonal label/.style={rotate=45,anchor=north east}}
-
-\foreach \y in {1,...,\numClasses} %loop vertical starting on top
-{
-	% Add class name on the left
-	\node [anchor=east] at (0.4,-\y) {\pgfmathparse{\classNames[\y-1]}\pgfmathresult}; 
-	
-	\foreach \x in {1,...,\numClasses}  %loop horizontal starting on left
-	{
-		%---- Start of automatic calculation of totSamples for the column ------------   
-		\def\totSamples{0}
-		\foreach \ll in {1,...,\numClasses}
-		{
-			\pgfmathparse{\myConfMat[\ll-1][\x-1]}   %fetch next element
-			\xdef\totSamples{\totSamples+\pgfmathresult} %accumulate it with previous sum
-			%must use \xdef fro global effect otherwise lost in foreach loop!
-		}
-		\pgfmathparse{\totSamples} \xdef\totSamples{\pgfmathresult}  % put the final sum in variable
-		%---- End of automatic calculation of totSamples ----------------
-		
-		\begin{scope}[shift={(\x,-\y)}]
-		\def\mVal{\myConfMat[\y-1][\x-1]} % The value at index y,x (-1 because of zero indexing)
-		\pgfmathtruncatemacro{\r}{\mVal}   %
-		\pgfmathtruncatemacro{\p}{round(\r/\totSamples*100)}
-		\coordinate (C) at (0,0);
-		\ifthenelse{\p<50}{\def\txtcol{black}}{\def\txtcol{white}} %decide text color for contrast
-		\node[
-		draw,                 %draw lines
-		text=\txtcol,         %text color (automatic for better contrast)
-		align=center,         %align text inside cells (also for wrapping)
-		fill=black!\p,        %intensity of fill (can change base color)
-		minimum size=\myScale*10mm,    %cell size to fit the scale and integer dimensions (in cm)
-		inner sep=0,          %remove all inner gaps to save space in small scales
-		] (C) {\r\\\p\%};     %text to put in cell (adapt at will)
-		%Now if last vertical class add its label at the bottom
-		\ifthenelse{\y=\numClasses}{
-			\node [] at ($(C)-(0,0.75)$) % can use vertical or diagonal label as option
-			{\pgfmathparse{\classNames[\x-1]}\pgfmathresult};}{}
-		\end{scope}
-	}
-}
-%Now add x and y labels on suitable coordinates
-\coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
-\coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {};
-\node []               at (xaxis) {};
-\end{tikzpicture}
-
-%% MATRICDE DI CONFUSIONE DEL RULLANTE SPAZZOLATO
-\def\myConfMat{{
-		{  67,  10},  %row 1
-		{  13,  63},  %row 2
-}}
-
-\def\classNames{{"SI","NO"}} %class names. Adapt at will
-
-\def\numClasses{2} %number of classes. Could be automatic, but you can change it for tests.
-
-\def\myScale{1.5} % 1.5 is a good scale. Values under 1 may need smaller fonts!
-\begin{tikzpicture}[
-scale = \myScale,
-%font={\scriptsize}, %for smaller scales, even \tiny may be useful
-]
-
-\tikzset{vertical label/.style={rotate=90,anchor=east}}   % usable styles for below
-\tikzset{diagonal label/.style={rotate=45,anchor=north east}}
-
-\foreach \y in {1,...,\numClasses} %loop vertical starting on top
-{
-	% Add class name on the left
-	\node [anchor=east] at (0.4,-\y) {\pgfmathparse{\classNames[\y-1]}\pgfmathresult}; 
-	
-	\foreach \x in {1,...,\numClasses}  %loop horizontal starting on left
-	{
-		%---- Start of automatic calculation of totSamples for the column ------------   
-		\def\totSamples{0}
-		\foreach \ll in {1,...,\numClasses}
-		{
-			\pgfmathparse{\myConfMat[\ll-1][\x-1]}   %fetch next element
-			\xdef\totSamples{\totSamples+\pgfmathresult} %accumulate it with previous sum
-			%must use \xdef fro global effect otherwise lost in foreach loop!
-		}
-		\pgfmathparse{\totSamples} \xdef\totSamples{\pgfmathresult}  % put the final sum in variable
-		%---- End of automatic calculation of totSamples ----------------
-		
-		\begin{scope}[shift={(\x,-\y)}]
-		\def\mVal{\myConfMat[\y-1][\x-1]} % The value at index y,x (-1 because of zero indexing)
-		\pgfmathtruncatemacro{\r}{\mVal}   %
-		\pgfmathtruncatemacro{\p}{round(\r/\totSamples*100)}
-		\coordinate (C) at (0,0);
-		\ifthenelse{\p<50}{\def\txtcol{black}}{\def\txtcol{white}} %decide text color for contrast
-		\node[
-		draw,                 %draw lines
-		text=\txtcol,         %text color (automatic for better contrast)
-		align=center,         %align text inside cells (also for wrapping)
-		fill=black!\p,        %intensity of fill (can change base color)
-		minimum size=\myScale*10mm,    %cell size to fit the scale and integer dimensions (in cm)
-		inner sep=0,          %remove all inner gaps to save space in small scales
-		] (C) {\r\\\p\%};     %text to put in cell (adapt at will)
-		%Now if last vertical class add its label at the bottom
-		\ifthenelse{\y=\numClasses}{
-			\node [] at ($(C)-(0,0.75)$) % can use vertical or diagonal label as option
-			{\pgfmathparse{\classNames[\x-1]}\pgfmathresult};}{}
-		\end{scope}
-	}
-}
-%Now add x and y labels on suitable coordinates
-\coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
-\coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {};
-\node []               at (xaxis) {};
-\end{tikzpicture}
-
-%% MATRICDE DI CONFUSIONE DEL COLPO DI RULLANTE
-\def\myConfMat{{
-		{  63,   1},  %row 1
-		{   1,  72},  %row 2
-}}
-
-\def\classNames{{"SI","NO"}} %class names. Adapt at will
-
-\def\numClasses{2} %number of classes. Could be automatic, but you can change it for tests.
-
-\def\myScale{1.5} % 1.5 is a good scale. Values under 1 may need smaller fonts!
-\begin{tikzpicture}[
-scale = \myScale,
-%font={\scriptsize}, %for smaller scales, even \tiny may be useful
-]
-
-\tikzset{vertical label/.style={rotate=90,anchor=east}}   % usable styles for below
-\tikzset{diagonal label/.style={rotate=45,anchor=north east}}
-
-\foreach \y in {1,...,\numClasses} %loop vertical starting on top
-{
-	% Add class name on the left
-	\node [anchor=east] at (0.4,-\y) {\pgfmathparse{\classNames[\y-1]}\pgfmathresult}; 
-	
-	\foreach \x in {1,...,\numClasses}  %loop horizontal starting on left
-	{
-		%---- Start of automatic calculation of totSamples for the column ------------   
-		\def\totSamples{0}
-		\foreach \ll in {1,...,\numClasses}
-		{
-			\pgfmathparse{\myConfMat[\ll-1][\x-1]}   %fetch next element
-			\xdef\totSamples{\totSamples+\pgfmathresult} %accumulate it with previous sum
-			%must use \xdef fro global effect otherwise lost in foreach loop!
-		}
-		\pgfmathparse{\totSamples} \xdef\totSamples{\pgfmathresult}  % put the final sum in variable
-		%---- End of automatic calculation of totSamples ----------------
-		
-		\begin{scope}[shift={(\x,-\y)}]
-		\def\mVal{\myConfMat[\y-1][\x-1]} % The value at index y,x (-1 because of zero indexing)
-		\pgfmathtruncatemacro{\r}{\mVal}   %
-		\pgfmathtruncatemacro{\p}{round(\r/\totSamples*100)}
-		\coordinate (C) at (0,0);
-		\ifthenelse{\p<50}{\def\txtcol{black}}{\def\txtcol{white}} %decide text color for contrast
-		\node[
-		draw,                 %draw lines
-		text=\txtcol,         %text color (automatic for better contrast)
-		align=center,         %align text inside cells (also for wrapping)
-		fill=black!\p,        %intensity of fill (can change base color)
-		minimum size=\myScale*10mm,    %cell size to fit the scale and integer dimensions (in cm)
-		inner sep=0,          %remove all inner gaps to save space in small scales
-		] (C) {\r\\\p\%};     %text to put in cell (adapt at will)
-		%Now if last vertical class add its label at the bottom
-		\ifthenelse{\y=\numClasses}{
-			\node [] at ($(C)-(0,0.75)$) % can use vertical or diagonal label as option
-			{\pgfmathparse{\classNames[\x-1]}\pgfmathresult};}{}
-		\end{scope}
-	}
-}
-%Now add x and y labels on suitable coordinates
-\coordinate (yaxis) at (-0.3,0.5-\numClasses/2);  %must adapt if class labels are wider!
-\coordinate (xaxis) at (0.5+\numClasses/2, -\numClasses-1.25); %id. for non horizontal labels!
-\node [vertical label] at (yaxis) {};
-\node []               at (xaxis) {};
-\end{tikzpicture}
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/first_classification/sn_hit_cm.png}
+		\caption{Matrice di confusione per il colpo di rullante}
+		\label{fig:1c}
+	\end{subfigure}\hfill
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/first_classification/kick_cm.png}
+		\caption{Matrice di confusione per la cassa}
+		\label{fig:1d}
+	\end{subfigure}
+	\caption{Matrici di confusione della prima fase}
+	\label{fig:1}
+\end{figure}
 
 È possibile notare degli ottimi risultati per tutti gli strumenti nel riconoscimento, in particolar modo per la cassa e il colpo di rullante, vista la natura dell'onda sonora da loro prodotta, un'impulso con una crescita molto rapida. Lo strumento che è riconosciuto peggio è invece il rullante spazzolato, anch'esso per la natura dell'onda sonora da lui prodotto, distinguibile meno facilmente da un possibile rumore per ampiezza e impulso con crescita molto minore.\\
 Essendo questi risultati molto buoni, è possibile affermare che con le features utilizzate risulta possibile distinguere tra una nota e una non nota.\\
 
 \section{Seconda fase}
 In questa fase si vuole rendere più fine il riconoscimento delle note, consentendo di accettare in input un'intera traccia audio e non solo dei singoli frammenti di note o non per il riconoscimento. Partendo dalla classificazione, viene sempre utilizzato J48 per costruire un albero di decisione che non porterà più a decidere se un frammento analizzato è una nota o meno, questo infatti porterà a classificare in 5 classi diverse ogni elemento di input, come appunto descritto a inizio capitolo. L'algoritmo di classificazione è molto simile al passo precedente, l'unica differenza è che vengono scelti dei campioni più lunghi per poter essere spezzati in più sub-campioni, il primo classificato come 5 (certamente una nota), l'ultimo come 1 (certamente non una nota). Ogni sub-campione avrà la stessa lunghezza, e proprio così facendo è stato possibile fornire in input delle intere tracce, perché suddivise in sub-campioni, di lunghezza costante, al quale si associa a ognuno una classe da 1 a 5 che consente così di localizzare temporalmente le note, e risolvere dunque il problema posto inizialmente. 
-
 %INSERISCI MATRICI DI CONFUSIONE
 %SPIEGA QUALI SONO I PARAMETRI  CHE INFLUENZANO I RISULTATI, GRANULARITÀ, WINDOW LENGTH E OVERLAP.

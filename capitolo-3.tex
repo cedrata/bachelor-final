@@ -17,7 +17,7 @@ In questa fase lo scopo è stato appunto comprendere se una macchina con le feat
 	\centering
 	\begin{subfigure}{.5\linewidth}
 		\includegraphics[width=\linewidth]{./immagini/first_classification/cb_cm.png} 
-		\caption{Matrice di confusione per il basso}
+		\caption{Matricez di confusione per il basso}
 		\label{fig:1a}
 	\end{subfigure}\hfill
 	\begin{subfigure}{.5\linewidth}
@@ -44,6 +44,8 @@ In questa fase lo scopo è stato appunto comprendere se una macchina con le feat
 Essendo questi risultati molto buoni, è possibile affermare che con le features utilizzate risulta possibile distinguere tra una nota e una non nota.\\
 
 \section{Seconda fase}
-In questa fase si vuole rendere più fine il riconoscimento delle note, consentendo di accettare in input un'intera traccia audio e non solo dei singoli frammenti di note o non per il riconoscimento. Partendo dalla classificazione, viene sempre utilizzato J48 per costruire un albero di decisione che non porterà più a decidere se un frammento analizzato è una nota o meno, questo infatti porterà a classificare in 5 classi diverse ogni elemento di input, come appunto descritto a inizio capitolo. L'algoritmo di classificazione è molto simile al passo precedente, l'unica differenza è che vengono scelti dei campioni più lunghi per poter essere spezzati in più sub-campioni, il primo classificato come 5 (certamente una nota), l'ultimo come 1 (certamente non una nota). Ogni sub-campione avrà la stessa lunghezza, e proprio così facendo è stato possibile fornire in input delle intere tracce, perché suddivise in sub-campioni, di lunghezza costante, al quale si associa a ognuno una classe da 1 a 5 che consente così di localizzare temporalmente le note, e risolvere dunque il problema posto inizialmente. 
+In questa fase si vuole rendere più fine il riconoscimento delle note, consentendo di accettare in input un'intera traccia audio e non solo dei singoli frammenti di note o non per il riconoscimento. Partendo dalla classificazione, viene sempre utilizzato J48 per costruire un albero di decisione che non porterà più a decidere se un frammento analizzato è una nota o meno, questo infatti porterà a classificare in 5 classi diverse ogni elemento di input, come appunto descritto a inizio capitolo. L'algoritmo di classificazione è molto simile al passo precedente, l'unica differenza è che vengono scelti dei campioni più lunghi per poter essere spezzati in più sub-campioni, il primo classificato come 5 (certamente una nota), l'ultimo come 1 (certamente non una nota). Ogni sub-campione avrà la stessa lunghezza, e proprio così facendo è stato possibile fornire in input delle intere tracce, perché suddivise in sub-campioni, di lunghezza costante, al quale si associa a ognuno una classe da 1 a 5 che consente così di localizzare temporalmente le note, e risolvere dunque il problema posto inizialmente.\\
 %INSERISCI MATRICI DI CONFUSIONE
+
 %SPIEGA QUALI SONO I PARAMETRI  CHE INFLUENZANO I RISULTATI, GRANULARITÀ, WINDOW LENGTH E OVERLAP.
+Questi risultati sono stati ottenuti effettuando una classificazione dove ogni sub campione è esattamente 8820 campioni, quindi 0.2s, per il campione successivo si esegue uno shift di 4410 campioni, ottenendo 0.1s di granularità e di overlap\footnote{La porzione di audio che si sovrappone tra la misura corrente e quella successiva}

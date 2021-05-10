@@ -17,7 +17,7 @@ In questa fase lo scopo è stato appunto comprendere se una macchina con le feat
 	\centering
 	\begin{subfigure}{.5\linewidth}
 		\includegraphics[width=\linewidth]{./immagini/first_classification/cb_cm.png} 
-		\caption{Matricez di confusione per il basso}
+		\caption{Matrice di confusione per il basso}
 		\label{fig:1a}
 	\end{subfigure}\hfill
 	\begin{subfigure}{.5\linewidth}
@@ -47,5 +47,34 @@ Essendo questi risultati molto buoni, è possibile affermare che con le features
 In questa fase si vuole rendere più fine il riconoscimento delle note, consentendo di accettare in input un'intera traccia audio e non solo dei singoli frammenti di note o non per il riconoscimento. Partendo dalla classificazione, viene sempre utilizzato J48 per costruire un albero di decisione che non porterà più a decidere se un frammento analizzato è una nota o meno, questo infatti porterà a classificare in 5 classi diverse ogni elemento di input, come appunto descritto a inizio capitolo. L'algoritmo di classificazione è molto simile al passo precedente, l'unica differenza è che vengono scelti dei campioni più lunghi per poter essere spezzati in più sub-campioni, il primo classificato come 5 (certamente una nota), l'ultimo come 1 (certamente non una nota). Ogni sub-campione avrà la stessa lunghezza, e proprio così facendo è stato possibile fornire in input delle intere tracce, perché suddivise in sub-campioni, di lunghezza costante, al quale si associa a ognuno una classe da 1 a 5 che consente così di localizzare temporalmente le note, e risolvere dunque il problema posto inizialmente.\\
 %INSERISCI MATRICI DI CONFUSIONE
 
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/second_classification/cb_cm.png} 
+		\caption{Matrice di confusione per il basso}
+		\label{fig:1a}
+	\end{subfigure}\hfill
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/second_classification/sn_brushed_cm.png}
+		\caption{Matrice di confusione per il rullante spazzolato}
+		\label{fig:1b}
+	\end{subfigure}
+	
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/second_classification/sn_hit_cm.png}
+		\caption{Matrice di confusione per il colpo di rullante}
+		\label{fig:1c}
+	\end{subfigure}\hfill
+	\begin{subfigure}{.5\linewidth}
+		\includegraphics[width=\linewidth]{./immagini/second_classification/kick_cm.png}
+		\caption{Matrice di confusione per la cassa}
+		\label{fig:1d}
+	\end{subfigure}
+	\caption{Matrici di confusione della prima fase}
+	\label{fig:1}
+\end{figure}
+
 %SPIEGA QUALI SONO I PARAMETRI  CHE INFLUENZANO I RISULTATI, GRANULARITÀ, WINDOW LENGTH E OVERLAP.
-Questi risultati sono stati ottenuti effettuando una classificazione dove ogni sub campione è esattamente 8820 campioni, quindi 0.2s, per il campione successivo si esegue uno shift di 4410 campioni, ottenendo 0.1s di granularità e di overlap\footnote{La porzione di audio che si sovrappone tra la misura corrente e quella successiva}
+Questi risultati sono stati ottenuti effettuando una classificazione dove ogni sub campione è esattamente 8820 campioni, quindi 0.2s, per il campione successivo si esegue uno shift di 4410 campioni, ottenendo 0.1s di granularità e di overlap\footnote{Il tempo di sovrapponimento tra un sub-campione e l'altro}\\
+
+Nei risultati ottenuti è possibile notare un peggioramento delle predizioni in modo particolare nel rullante, precisamente con un 51\% di istanze classificate correttamente per il rullante spazzolato e un 41\% per il colpo semplice di rullante. Con la cassa è stato ottenuto invece quello che è il risultato migiore con l'83\% di istanze classificate in modo corretto. Questa così ampia divergenza, così come per i risultati ottenuti precedentemente, è data dalla forma e dell'onda sonora in se. Infatti la cassa genera un onda con transiente molto marcato, e facilmente riconoscibile con le features utilizzate, che decade in modo molto rapido differentemente da quanto invece succede con il rullante, in particolar modo quello spazzolato. Un altro aspetto che influisce sull'abilità di riconoscere o meno un'onda sonora da un rumore è dato dall'intensità del segnale generato, infatti il rullante spazzolato genera un'onda con un ampiezza molto inferiore, difficilmente distinguibile da quello che è il rumore. L'ultimo aspetto ma non meno importante riguarda come sono stati selezionati i campioni per allenare la macchina, la numerosità dei campioni estratti e la qualità delle registrazioni utilizzate, tutti questi parametri possono influenzare pesantemente quelli che sono i risultati. Un numero maggiore di campioni potrebbe insegnare in modo migliore alla macchina la quale sarà in grado di costruire un albero di decisione migliore, come anche delle registrazioni migliori o con  volumi maggiori per alcuni strumenti dove possibile.

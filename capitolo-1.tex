@@ -93,28 +93,6 @@ Per comprendere meglio è possibile considerare il seguente data-set che consent
 	\end{center}
 \end{table}
 
-%% Please add the following required packages to your document preamble:
-%% \usepackage{booktabs}
-%\begin{center}
-%%	\label{tbl}
-%%	\caption{dataset}
-%	\begin{tabular}{l|c|c|c|r}
-%		\toprule
-%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-%		sole     & caldo  & alta    & no & no \\ \midrule
-%		sole     & caldo  & alta    & si & no \\ \midrule
-%		nuvoloso & caldo  & alta    & no & si \\ \midrule
-%		pioggia  & media  & normale & no & si \\ \midrule
-%		pioggia  & freddo & normale & no & si \\ \midrule
-%		pioggia  & freddo & normale & si & no \\ \midrule
-%		nuvoloso & freddo & normale & si & no \\ \midrule
-%		sole     & media  & alta    & no & no \\ \midrule
-%		sole     & freddo & normale & no & si \\ \midrule
-%		pioggia  & media  & normale & no & si \\ \midrule
-%		sole     & media  & normale & si & si \\ \midrule
-%		nuvoloso & media  & alta    & si & si \\ \bottomrule
-%	\end{tabular}
-%\end{center}
 Si procede dunque calcolando l'entropia per il data-set con 7 esiti positivi e 5 negativi il risultato risulterà la seguente informazione:\\ $I\left(D\right) = E\left(\frac{7}{12}; \frac{5}{12}\right) = -\left(\frac{7}{12} log_2\left(\frac{7}{12} \right) +  \frac{5}{12} log_2\left(\frac{5}{12} \right)\right) = 0.98$
 \\Ora è possibile calcolare l'entropia dei singoli attributi.\\
 Si osserva il tempo su tutto il set per cominciare\\
@@ -164,40 +142,20 @@ Questo procedimento andrà eseguito per ogni attributo, quindi temperatura, umid
 	\end{center}
 \end{table}
 
-%\begin{center}
-%	%	\label{tbl}
-%	%	\caption{dataset}
-%	\begin{tabular}{@{}|l|l|l|l|l|@{}}
-%		\toprule
-%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-%		sole     & caldo  & alta    & no & no \\ \midrule
-%		sole     & caldo  & alta    & si & no \\ \midrule
-%		sole     & media  & alta    & no & no \\ \midrule
-%		sole     & freddo & normale & no & si \\ \midrule
-%		sole     & media  & normale & si & si \\ \bottomrule
-%	\end{tabular}
-	
-%	\begin{tabular}{@{}|l|l|l|l|l|@{}}
-%		\toprule
-%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-%		pioggia  & media  & normale & no & si \\ \midrule
-%		pioggia  & freddo & normale & no & si \\ \midrule
-%		pioggia  & freddo & normale & si & no \\ \midrule
-%		pioggia  & media  & normale & no & si \\ \bottomrule
-%	\end{tabular}
+uno con tutti tutti i valori dell'attributo tempo pari a ``sole'', uno con ``pioggia'', e uno con ``nuvoloso'' generando così la prima porzione di albero\ref{figure:DT_start}, la sua radice che presenterà 3 possibili percorsi, 1 per ogni tipo di meteo. A questo punto bisognerà ripetere i passaggi per ogni set che è stato ottenuto e fino a che ogni set sia puro.
 
-%	\begin{tabular}{@{}|l|l|l|l|l|@{}}
-%		\toprule
-%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-%		nuvoloso & caldo  & alta    & no & si \\ \midrule
-%		nuvoloso & freddo & normale & si & no \\ \midrule
-%		nuvoloso & media  & alta    & si & si \\ \bottomrule
-%	\end{tabular}
-
-%\end{center}
-
-uno con tutti tutti i valori dell'attributo tempo pari a ``sole'', uno con ``pioggia'', e uno con ``nuvoloso'' generando così la prima porzione di albero, la sua radice che presenterà 3 possibili percorsi, 1 per ogni tipo di meteo. A questo punto bisognerà ripetere i passaggi per ogni set che è stato ottenuto e fino a che ogni set sia puro.
-
+\begin{figure}
+	\begin{center}
+		\begin{tikzpicture}
+		\node(0){root}
+		child{node{sole}}
+		child{node{pioggia}}
+		child{node{nuvoloso}};
+		\end{tikzpicture}
+	\end{center}
+\caption{DT per il data-set di esempio}
+\label{figure:DT_start}
+\end{figure}
 
 \section{I passaggi necessari}
 Per costruire un sistema di classificazione intelligente con l'utilizzo del ML supervisionato, precisamente con weka sono dunque necessari vari passaggi. Il primo passaggio è la creazione di un data-set, questo potrà essere fatto in diversi modi, nel caso corrente il risultato è un file \href{https://www.cs.waikato.ac.nz/ml/weka/arff.html}{ARFF}\footnote{File di tipo testuale che presenta due sezioni, header e data. In header viene specificata la struttura e il tipo di dati per ogni tupla. In data vengono riportate le misurazioni o valori ordinati come specificato in header con i rispettivi valori.} contenente le features\footnote{Sono le caratteristiche di interesse del fenomeno che deve essere studiato} dei file audio che sono stati etichettati con le rispettive classi.\\

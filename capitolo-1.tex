@@ -22,7 +22,6 @@ Questa struttura decisionale viene costruita tramite dei \emph{meta-algoritmi}\f
 \end{enumerate}
 I passaggi appena descritti sono la sintesi del seguente pseudocodice:
 
-% TODO: pseudocode
 \begin{algorithm}
 	\begin{algorithmic}
 		\Procedure{ID3}{$Esempi$, $AttributoTarget$, $Attributi$}
@@ -70,28 +69,52 @@ Questi passaggi teoricamente andrebbero ripetuti per ogni sub-set fino a ottener
 
 Per comprendere meglio è possibile considerare il seguente data-set che consentirà di decidere se una partita può o meno essere giocata in base alle condizioni meteorologiche.
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{center}
-%	\label{tbl}
-%	\caption{dataset}
-	\begin{tabular}{@{}|l|l|l|l|l|@{}}
-		\toprule
-		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-		sole     & caldo  & alta    & no & no \\ \midrule
-		sole     & caldo  & alta    & si & no \\ \midrule
-		nuvoloso & caldo  & alta    & no & si \\ \midrule
-		pioggia  & media  & normale & no & si \\ \midrule
-		pioggia  & freddo & normale & no & si \\ \midrule
-		pioggia  & freddo & normale & si & no \\ \midrule
-		nuvoloso & freddo & normale & si & no \\ \midrule
-		sole     & media  & alta    & no & no \\ \midrule
-		sole     & freddo & normale & no & si \\ \midrule
-		pioggia  & media  & normale & no & si \\ \midrule
-		sole     & media  & normale & si & si \\ \midrule
-		nuvoloso & media  & alta    & si & si \\ \bottomrule
-	\end{tabular}
-\end{center}
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{l|c|c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+			\textbf{Tempo} & \textbf{Temperatura} & \textbf{Umidità} & \textbf{Vento} & \textbf{Si Gioca}\\
+			%			$\alpha$ & $\beta$ & $\gamma$ \\
+			\hline
+			sole     & caldo  & alta    & no & no \\
+			sole     & caldo  & alta    & si & no \\
+			nuvoloso & caldo  & alta    & no & si \\
+			pioggia  & media  & normale & no & si \\
+			pioggia  & freddo & normale & no & si \\
+			pioggia  & freddo & normale & si & no \\
+			nuvoloso & freddo & normale & si & no \\
+			sole     & media  & alta    & no & no \\
+			sole     & freddo & normale & no & si \\
+			pioggia  & media  & normale & no & si \\
+			sole     & media  & normale & si & si \\
+			nuvoloso & media  & alta    & si & si 
+		\end{tabular}
+		\caption{Data-set di esempio iniziale.}
+		\label{tab:data-set-example_1}
+	\end{center}
+\end{table}
+
+%% Please add the following required packages to your document preamble:
+%% \usepackage{booktabs}
+%\begin{center}
+%%	\label{tbl}
+%%	\caption{dataset}
+%	\begin{tabular}{l|c|c|c|r}
+%		\toprule
+%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
+%		sole     & caldo  & alta    & no & no \\ \midrule
+%		sole     & caldo  & alta    & si & no \\ \midrule
+%		nuvoloso & caldo  & alta    & no & si \\ \midrule
+%		pioggia  & media  & normale & no & si \\ \midrule
+%		pioggia  & freddo & normale & no & si \\ \midrule
+%		pioggia  & freddo & normale & si & no \\ \midrule
+%		nuvoloso & freddo & normale & si & no \\ \midrule
+%		sole     & media  & alta    & no & no \\ \midrule
+%		sole     & freddo & normale & no & si \\ \midrule
+%		pioggia  & media  & normale & no & si \\ \midrule
+%		sole     & media  & normale & si & si \\ \midrule
+%		nuvoloso & media  & alta    & si & si \\ \bottomrule
+%	\end{tabular}
+%\end{center}
 Si procede dunque calcolando l'entropia per il data-set con 7 esiti positivi e 5 negativi il risultato risulterà la seguente informazione:\\ $I\left(D\right) = E\left(\frac{7}{12}; \frac{5}{12}\right) = -\left(\frac{7}{12} log_2\left(\frac{7}{12} \right) +  \frac{5}{12} log_2\left(\frac{5}{12} \right)\right) = 0.98$
 \\Ora è possibile calcolare l'entropia dei singoli attributi.\\
 Si osserva il tempo su tutto il set per cominciare\\
@@ -100,37 +123,78 @@ $I(tempo, D) = \frac{|D(tempo=sole)|}{|D|} +  \frac{|D(tempo=pioggia)|}{|D|} + \
 = \frac{5}{12} E\left(\frac{2}{5};\frac{3}{5}\right) + \frac{4}{12} E\left(\frac{3}{4};\frac{1}{4}\right) + \frac{3}{12} E\left(\frac{2}{3};\frac{1}{3}\right) = 0.74$\\
 Questo procedimento andrà eseguito per ogni attributo, quindi temperatura, umidità e vento ancora. Se vengono svolti i calcoli per i restanti si avrà che il l'entropia minore si ha proprio per la temperatura, risulteranno dunque i seguenti data-set:
 
-\begin{center}
-	%	\label{tbl}
-	%	\caption{dataset}
-	\begin{tabular}{@{}|l|l|l|l|l|@{}}
-		\toprule
-		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-		sole     & caldo  & alta    & no & no \\ \midrule
-		sole     & caldo  & alta    & si & no \\ \midrule
-		sole     & media  & alta    & no & no \\ \midrule
-		sole     & freddo & normale & no & si \\ \midrule
-		sole     & media  & normale & si & si \\ \bottomrule
-	\end{tabular}
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{l|c|c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+			\textbf{Tempo} & \textbf{Temperatura} & \textbf{Umidità} & \textbf{Vento} & \textbf{Si Gioca}\\
+			%			$\alpha$ & $\beta$ & $\gamma$ \\
+			\hline
+			sole     & caldo  & alta    & no & no \\
+			sole     & caldo  & alta    & si & no \\
+			sole     & media  & alta    & no & no \\
+			sole     & freddo & normale & no & si \\
+			sole     & media  & normale & si & si
+		\end{tabular}
+		\caption{caption.}
+		\label{tab:data-set-example_2}
+		
+		\begin{tabular}{l|c|c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+			\textbf{Tempo} & \textbf{Temperatura} & \textbf{Umidità} & \textbf{Vento} & \textbf{Si Gioca}\\
+			%			$\alpha$ & $\beta$ & $\gamma$ \\
+			\hline
+			pioggia  & media  & normale & no & si \\
+			pioggia  & freddo & normale & no & si \\
+			pioggia  & freddo & normale & si & no \\
+			pioggia  & media  & normale & no & si \\
+		\end{tabular}
+		\caption{caption.}
+		\label{tab:data-set-example_3}
+		
+		\begin{tabular}{l|c|c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+			\textbf{Tempo} & \textbf{Temperatura} & \textbf{Umidità} & \textbf{Vento} & \textbf{Si Gioca}\\
+			%			$\alpha$ & $\beta$ & $\gamma$ \\
+			\hline
+			nuvoloso & caldo  & alta    & no & si \\
+			nuvoloso & freddo & normale & si & no \\
+			nuvoloso & media  & alta    & si & si \\
+		\end{tabular}
+		\caption{caption.}
+		\label{tab:data-set-example_4}
+		
+	\end{center}
+\end{table}
+
+%\begin{center}
+%	%	\label{tbl}
+%	%	\caption{dataset}
+%	\begin{tabular}{@{}|l|l|l|l|l|@{}}
+%		\toprule
+%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
+%		sole     & caldo  & alta    & no & no \\ \midrule
+%		sole     & caldo  & alta    & si & no \\ \midrule
+%		sole     & media  & alta    & no & no \\ \midrule
+%		sole     & freddo & normale & no & si \\ \midrule
+%		sole     & media  & normale & si & si \\ \bottomrule
+%	\end{tabular}
 	
-	\begin{tabular}{@{}|l|l|l|l|l|@{}}
-		\toprule
-		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-		pioggia  & media  & normale & no & si \\ \midrule
-		pioggia  & freddo & normale & no & si \\ \midrule
-		pioggia  & freddo & normale & si & no \\ \midrule
-		pioggia  & media  & normale & no & si \\ \bottomrule
-	\end{tabular}
+%	\begin{tabular}{@{}|l|l|l|l|l|@{}}
+%		\toprule
+%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
+%		pioggia  & media  & normale & no & si \\ \midrule
+%		pioggia  & freddo & normale & no & si \\ \midrule
+%		pioggia  & freddo & normale & si & no \\ \midrule
+%		pioggia  & media  & normale & no & si \\ \bottomrule
+%	\end{tabular}
 
-	\begin{tabular}{@{}|l|l|l|l|l|@{}}
-		\toprule
-		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
-		nuvoloso & caldo  & alta    & no & si \\ \midrule
-		nuvoloso & freddo & normale & si & no \\ \midrule
-		nuvoloso & media  & alta    & si & si \\ \bottomrule
-	\end{tabular}
+%	\begin{tabular}{@{}|l|l|l|l|l|@{}}
+%		\toprule
+%		tempo	 & temperatura & umidità & vento & si gioca\\ \midrule
+%		nuvoloso & caldo  & alta    & no & si \\ \midrule
+%		nuvoloso & freddo & normale & si & no \\ \midrule
+%		nuvoloso & media  & alta    & si & si \\ \bottomrule
+%	\end{tabular}
 
-\end{center}
+%\end{center}
 
 uno con tutti tutti i valori dell'attributo tempo pari a ``sole'', uno con ``pioggia'', e uno con ``nuvoloso'' generando così la prima porzione di albero, la sua radice che presenterà 3 possibili percorsi, 1 per ogni tipo di meteo. A questo punto bisognerà ripetere i passaggi per ogni set che è stato ottenuto e fino a che ogni set sia puro.
 
